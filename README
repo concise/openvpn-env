@@ -1,0 +1,23 @@
+This README documentation is not finished
+=========================================
+
+1.  Install VirtualBox and Vagrant
+
+2.  Open two terminals, one for the client (`cd openvpn-client`) and
+    one for the server (`cd openvpn-server`)
+
+3.  Run `vagrant up` in each of the terminal
+
+4.  Run openvpn server
+
+    > ADD push "redirect-gateway autolocal"
+    > ADD push "dhcp-option DNS 10.8.0.1"
+    # /root/local/bin/openvpn --config \
+      /root/openvpn-master/sample/sample-config-files/server.conf
+
+5.  Run openvpn client
+
+    > REMOVE useless remote
+    # /root/local/bin/openvpn --config \
+      /root/openvpn-master/sample/sample-config-files/client.conf
+    # route del -net 192.168.8.8 netmask 255.255.255.255
