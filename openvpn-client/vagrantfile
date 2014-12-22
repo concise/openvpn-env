@@ -1,0 +1,33 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  # Use the current official Ubuntu 14.04 64-bit box
+  config.vm.box = "ubuntu/trusty64"
+
+  # Set the default hostname for this ubuntu box
+  config.vm.hostname = "openvpn-client"
+
+  # Specify the resources for this VM
+  config.vm.provider "virtualbox" do |v|
+    v.name = "openvpn-client"
+  end
+
+  # I want to use the "insecure" key instead of newly generated ones
+  config.ssh.insert_key = false
+
+  # Disable the default "./" <--> "/vagrant/" synced folder
+  config.vm.synced_folder ".", "/vagrant", :disabled => true
+  config.vm.synced_folder "../data", "/root/data", :create => true
+
+  # Set up private network
+  config.vm.network "private_network", ip: "192.168.8.9",
+      virtualbox__intnet: true
+
+  # Some of my personal configuration for this VM
+  config.vm.provision "shell", inline: <<-EOS
+    bash /root/data/vm-provision.sh
+  EOS
+
+end
