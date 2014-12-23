@@ -17,4 +17,7 @@ This README documentation is not finished
 
     # /root/local/bin/openvpn --config \
       /root/openvpn-master/sample/sample-config-files/client.conf
-    # route del -net 192.168.8.8 netmask 255.255.255.255
+
+    Remove incorrect routing rules (should be routed to `eth1`, not `eth0`)
+
+    # route del -host 192.168.8.8
