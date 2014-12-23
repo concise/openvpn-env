@@ -1,23 +1,23 @@
-This README documentation is not finished
-=========================================
+0.  Install VirtualBox and Vagrant
 
-1.  Install VirtualBox and Vagrant
+1.  Make sure your computer (which hosts VMs) connects to the Internet
 
-2.  Open two terminals, one for the client (`cd openvpn-client`) and
-    one for the server (`cd openvpn-server`)
+2.  Open two terminals, one for the client (run `cd openvpn-client`) and the
+    other for the server (run `cd openvpn-server`)
 
-3.  Run `vagrant up` in each of the terminal
+3.  Run `vagrant up && vagrant ssh` in each of the terminal
 
-4.  Run openvpn server
+4.  Run openvpn server in the shell
 
     # /root/local/bin/openvpn --config \
       /root/openvpn-master/sample/sample-config-files/server.conf
 
-5.  Run openvpn client
+5.  Run openvpn client in the shell
 
     # /root/local/bin/openvpn --config \
       /root/openvpn-master/sample/sample-config-files/client.conf
 
-    Remove incorrect routing rules (should be routed to `eth1`, not `eth0`)
+    Remove incorrect routing rules if needed (e.g., traffic to vpn server
+    should be routed to `eth1`, not `eth0`)
 
     # route del -host 192.168.8.8
