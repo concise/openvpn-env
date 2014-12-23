@@ -8,12 +8,6 @@ if ! grep -q 'PROVISIONED' ~/.bashrc; then
     echo "Prepend /root/local/bin and /root/local/sbin to root's PATH"
     echo '#PROVISIONED:' >> ~/.bashrc
     echo 'PATH=~/local/bin:~/local/sbin:$PATH' >> ~/.bashrc
-
-    if [[ "$(hostname)" = 'openvpn-client' ]]; then
-        echo "echo 'Run openvpn --config /root/data/client.conf to start'" >> ~/.bashrc
-    elif [[ "$(hostname)" = 'openvpn-server' ]]; then
-        echo "echo 'Run openvpn --config /root/data/server.conf to start'" >> ~/.bashrc
-    fi
 fi
 
 if ! grep -q 'Asia/Taipei' /etc/timezone; then

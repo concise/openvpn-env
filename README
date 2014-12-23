@@ -1,41 +1,52 @@
-0.  Install VirtualBox and Vagrant.
+0.  Make sure you have installed VirtualBox and Vagrant.
 
 
 1.  Make sure your computer (which hosts VMs) connects to the Internet.
 
 
-2.  Open two terminals, one for the client (run `cd openvpn-client`) and the
-    other for the server (run `cd openvpn-server`).
+2.  Open two terminals, one for the server:
+
+        --- IN TERMINAL #1 ---
+        $ cd openvpn-server
+
+    and the other for the client:
+
+        --- IN TERMINAL #2 ---
+        $ cd openvpn-client
 
 
 3.  Run `vagrant up && vagrant ssh` in each of the terminal.
     Change to the root shell using `sudo su -`.
     Have terminal multiplexing with `tmux`.
 
+        --- IN TERMINAL #1 ---
+        $ vagrant up
+        $ vagrant ssh
+        openvpn-server$ sudo su -
+        openvpn-server# tmux a || tmux
+        openvpn-server#
+
+        --- IN TERMINAL #2 ---
+        $ vagrant up
+        $ vagrant ssh
+        openvpn-client$ sudo su -
+        openvpn-client# tmux a || tmux
+        openvpn-client#
+
 
 4.  Run openvpn server.
 
-    1)  Each time the system boots up, I should run the command once.
-        The server has to NAT the VPN client traffic to the Internet.
+    Also note that each time the system boots up, I should run the `iptables`
+    command once, because the server has to NAT the VPN client traffic to the
+    Internet.
 
+        --- IN TERMINAL #1 ---
         # iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
-
-        You can check if it is already set up with the command:
-
         # iptables -t nat -nL
-
-    2)  Start the server.
-
         # openvpn --config /root/data/server.conf
 
 
 5.  Run openvpn client.
 
-    1)  Start the client.
-
+        --- IN TERMINAL #2 ---
         # openvpn --config /root/data/client.conf
-
-    2)  If needed, remove incorrect routing rules, e.g.,
-        run the command `route del -host 192.168.8.8`
-        because traffic to vpn server `192.168.8.8`
-        should be routed to `eth1` instead of `eth0`.
