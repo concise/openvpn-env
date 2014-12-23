@@ -1,8 +1,8 @@
-1.  Make sure you have installed VirtualBox and Vagrant.
+0.  Make sure you have installed VirtualBox and Vagrant.
     Make sure your computer (which hosts VMs) connects to the Internet.
 
 
-2.  Open two terminals, one for the server:
+1.  Open two terminals, one for the server:
 
         --- IN TERMINAL #1 ---
         $ cd server
@@ -20,21 +20,7 @@
     Command `vagrant ssh` is to SSH into the VMs.
 
 
-3.  Change to the root shell using `sudo su -`.
-    You can choose to have multiplexed multiple terminals with `tmux`.
-
-        --- IN TERMINAL #1 ---
-        openvpn-server$ sudo su -
-        openvpn-server# tmux a || tmux
-        openvpn-server#
-
-        --- IN TERMINAL #2 ---
-        openvpn-client$ sudo su -
-        openvpn-client# tmux a || tmux
-        openvpn-client#
-
-
-4.  Run openvpn server.
+2.  Run openvpn server.
 
     Also note that each time the system boots up, I should run the `iptables`
     command once, because the server has to NAT the VPN client traffic to the
@@ -46,7 +32,7 @@
         # openvpn --config /root/data/server.conf
 
 
-5.  Run openvpn client.
+3.  Run openvpn client.
 
         --- IN TERMINAL #2 ---
         # openvpn --config /root/data/client.conf
