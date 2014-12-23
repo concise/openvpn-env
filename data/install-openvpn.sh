@@ -4,6 +4,10 @@ set -e
 
 test -f /root/local/lib/libpolarssl.a
 
+if [[ -f /root/local/sbin/openvpn ]]; then
+    exit
+fi
+
 cd /root
 unzip /root/data/openvpn-master-e2e9a69c1e.zip
 cd /root/openvpn-master

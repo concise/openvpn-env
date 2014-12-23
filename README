@@ -1,23 +1,41 @@
-0.  Install VirtualBox and Vagrant
+0.  Install VirtualBox and Vagrant.
 
-1.  Make sure your computer (which hosts VMs) connects to the Internet
+
+1.  Make sure your computer (which hosts VMs) connects to the Internet.
+
 
 2.  Open two terminals, one for the client (run `cd openvpn-client`) and the
-    other for the server (run `cd openvpn-server`)
+    other for the server (run `cd openvpn-server`).
 
-3.  Run `vagrant up && vagrant ssh` in each of the terminal
 
-4.  Run openvpn server in the shell
+3.  Run `vagrant up && vagrant ssh` in each of the terminal.
+    Change to the root shell using `sudo su -`.
+    Have terminal multiplexing with `tmux`.
 
-    # /root/local/bin/openvpn --config \
-      /root/openvpn-master/sample/sample-config-files/server.conf
 
-5.  Run openvpn client in the shell
+4.  Run openvpn server.
 
-    # /root/local/bin/openvpn --config \
-      /root/openvpn-master/sample/sample-config-files/client.conf
+    1)  Each time the system boots up, I should run the command once.
+        The server has to NAT the VPN client traffic to the Internet.
 
-    Remove incorrect routing rules if needed (e.g., traffic to vpn server
-    should be routed to `eth1`, not `eth0`)
+        # iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 
-    # route del -host 192.168.8.8
+        You can check if it is already set up with the command:
+
+        # iptables -t nat -nL
+
+    2)  Start the server.
+
+        # openvpn --config /root/data/server.conf
+
+
+5.  Run openvpn client.
+
+    1)  Start the client.
+
+        # openvpn --config /root/data/client.conf
+
+    2)  If needed, remove incorrect routing rules, e.g.,
+        run the command `route del -host 192.168.8.8`
+        because traffic to vpn server `192.168.8.8`
+        should be routed to `eth1` instead of `eth0`.
