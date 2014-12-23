@@ -30,4 +30,9 @@ Vagrant.configure("2") do |config|
     bash /root/data/vm-provision.sh
   EOS
 
+  # If the `vagrant ssh` command is running, I wanna directly get a root shell
+  if ARGV[0] == "ssh"
+    config.ssh.username = "root"
+  end
+
 end

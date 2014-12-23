@@ -4,6 +4,10 @@ set -e
 
 mkdir -p ~/local/{,s}bin
 
+if ! grep -q 'vagrant insecure public key' /root/.ssh/authorized_keys; then
+    cat /home/vagrant/.ssh/authorized_keys >> /root/.ssh/authorized_keys
+fi
+
 if ! grep -q 'PROVISIONED' ~/.bashrc; then
     echo "Prepend /root/local/bin and /root/local/sbin to root's PATH"
     echo '#PROVISIONED:' >> ~/.bashrc
