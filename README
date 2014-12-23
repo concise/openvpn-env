@@ -16,8 +16,8 @@
         $ vagrant up
         $ vagrant ssh
 
-    Command `vagrant up` is to set up the VMs.
-    Command `vagrant ssh` is to SSH into the VMs.
+    The command `vagrant up` is to boot and set up the VM.
+    The command `vagrant ssh` is to get a root shell of the VM.
 
 
 2.  Run openvpn server.
@@ -28,7 +28,6 @@
 
         --- IN TERMINAL #1 ---
         # iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
-        # iptables -t nat -nL
         # openvpn --config /root/data/server.conf
 
 
@@ -36,3 +35,6 @@
 
         --- IN TERMINAL #2 ---
         # openvpn --config /root/data/client.conf
+
+    Now you should be able to test if the VPN works using packet sniffing tools
+    like `tcpdump`.
