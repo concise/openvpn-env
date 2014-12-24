@@ -8,7 +8,7 @@ if [[ -e /compile-polarssl.sh-running ]]; then
     exit 1
 fi
 echo 1 > /compile-polarssl.sh-running
-finish () { rm /compile-polarssl.sh-running }; trap finish EXIT 
+finish () { rm /compile-polarssl.sh-running; }; trap finish EXIT
 
 if [[ ! -d /root/data/polarssl ]]; then
     echo >&2 'Cannot find /root/data/polarssl directory'

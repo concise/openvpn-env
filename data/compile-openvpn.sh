@@ -2,13 +2,15 @@
 
 set -e
 
+test -f /root/local/lib/libpolarssl.a
+
 if [[ -e /compile-openvpn.sh-running ]]; then
     echo >&2 'Another `compile-openvpn.sh` process is already running'
     echo >&2 'Exiting'
     exit 1
 fi
 echo 1 > /compile-openvpn.sh-running
-finish () { rm /compile-openvpn.sh-running }; trap finish EXIT 
+finish () { rm /compile-openvpn.sh-running; }; trap finish EXIT
 
 if [[ ! -d /root/data/openvpn ]]; then
     echo >&2 'Cannot find /root/data/openvpn directory'
@@ -18,14 +20,7 @@ fi
 
 cd /root/data/openvpn
 
-libtoolize
-aclocal
-autoconf
-autoheader
-automake --add-missing
-autoreconf -i -v -f
-autoreconf --install
-sed -i -e 's/\(.*PolarSSL 1.3.x required.*\)/:#\1/' configure
+libtoolize; aclocal; autoconf; autoheader; automake --add-missing; autoreconf -i -v -f; autoreconf --install
 
 ./configure                                         \
     --prefix=/root/local                            \
