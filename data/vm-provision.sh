@@ -9,9 +9,9 @@ if ! grep -q 'vagrant insecure public key' /root/.ssh/authorized_keys; then
 fi
 
 if ! grep -q 'PROVISIONED' ~/.bashrc; then
-    echo "Prepend /root/local/bin and /root/local/sbin to root's PATH"
+    echo "Prepend /root/data, /root/local/bin, and /root/local/sbin to root's PATH"
     echo '#PROVISIONED:' >> ~/.bashrc
-    echo 'PATH=~/local/bin:~/local/sbin:$PATH' >> ~/.bashrc
+    echo 'PATH=~/data:~/local/bin:~/local/sbin:$PATH' >> ~/.bashrc
 fi
 
 if ! grep -q 'Asia/Taipei' /etc/timezone; then
@@ -34,12 +34,12 @@ fi
 if ! test -f /apt-get-install-done; then
     echo 'Start installing required Ubuntu packages...'
     apt-get update
-    apt-get install -y git liblzo2-dev libpam0g-dev libssl-dev autoconf shtool autotools-dev libtool unzip
+    apt-get install -y git liblzo2-dev libpam0g-dev libssl-dev autoconf shtool autotools-dev libtool unzip gdb exuberant-ctags
     echo 'OK' >> /apt-get-install-done
 fi
 
-echo 'Try to install polarssl to /root/local...'
-bash /root/data/install-polarssl.sh
-
-echo 'Try to install openvpn to /root/local...'
-bash /root/data/install-openvpn.sh
+#echo 'Try to install polarssl to /root/local...'
+#bash /root/data/install-polarssl.sh
+#
+#echo 'Try to install openvpn to /root/local...'
+#bash /root/data/install-openvpn.sh

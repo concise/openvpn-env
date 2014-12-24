@@ -2,15 +2,21 @@
 
 set -e
 
-test -f /root/local/lib/libpolarssl.a
+if [[ -e /compile-openvpn.sh-running ]]; then
+    echo >&2 'Another `compile-openvpn.sh` process is already running'
+    echo >&2 'Exiting'
+    exit 1
+fi
+echo 1 > /compile-openvpn.sh-running
+finish () { rm /compile-openvpn.sh-running }; trap finish EXIT 
 
-if [[ -f /root/local/sbin/openvpn ]]; then
-    exit
+if [[ ! -d /root/data/openvpn ]]; then
+    echo >&2 'Cannot find /root/data/openvpn directory'
+    echo >&2 'Exiting'
+    exit 1
 fi
 
-cd /root
-unzip /root/data/openvpn-master-e2e9a69c1e.zip
-cd /root/openvpn-master
+cd /root/data/openvpn
 
 libtoolize
 aclocal
